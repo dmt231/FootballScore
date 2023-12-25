@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Matches" android:id="@+id/messageIcon" android:icon="@drawable/repeat" />
+    <item android:title="Competitions" android:id="@+id/groupChat" android:icon="@drawable/trophy"/>
+    <item android:title="Teams" android:id="@+id/contact" android:icon="@drawable/football_club" />
+
+</menu>
