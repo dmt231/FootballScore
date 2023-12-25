@@ -3,7 +3,6 @@
     <style name="Theme.FootballScore" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/themeBackground</item>
-        <color name="themeBackground">#2049DD</color>
         <item name="colorPrimaryVariant">@color/themeBackground</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
