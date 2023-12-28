@@ -1,5 +1,6 @@
 package com.example.footballscore.model
 import com.example.footballscore.competitions.competion_match.Competition_Match
+import com.example.footballscore.matches.matchModel.Match
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -17,4 +18,8 @@ interface ApiInterface {
     @GET("competitions/{id}/matches")
     @Headers("X-Auth-Token:fba80be2ea3b4d5d8b9e9c3d4f10a2ed")
     fun getMatchFromCompetitionInPlay(@Path("id") competitionId : Int, @Query("status") status : String) : Call<Competition_Match>
+
+    @GET("matches")
+    @Headers("X-Auth-Token:fba80be2ea3b4d5d8b9e9c3d4f10a2ed")
+    fun getMatchRecentFor2day(@Query("dateFrom") dateFrom : String, @Query("dateTo")  dateTo : String ) : Call<Match>
 }

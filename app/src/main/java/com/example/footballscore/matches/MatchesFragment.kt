@@ -2,6 +2,7 @@ package com.example.footballscore.matches
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,12 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.footballscore.adapter.AdapterMatchHorizontal
 import com.example.footballscore.competitions.competion_match.Competition_Match
 
 import com.example.footballscore.databinding.MatchesLayoutBinding
+import com.example.footballscore.matches.matchModel.Match
 import com.example.footballscore.matches.matchModel.Matche
 import com.example.footballscore.model.ApiClient
 import com.example.footballscore.model.ApiInterface
@@ -23,6 +26,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -30,7 +35,8 @@ class MatchesFragment: Fragment() {
     private lateinit var  viewBinding : MatchesLayoutBinding
     private lateinit var  apiInterface : ApiInterface
     private lateinit var listMatchHorizontal : ArrayList<Matche>
-    private var date : String? = null
+    private lateinit var adapterHorizontal : AdapterMatchHorizontal
+    private var dateString : String? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,7 +44,7 @@ class MatchesFragment: Fragment() {
     ): View? {
         viewBinding = MatchesLayoutBinding.inflate(inflater, container, false)
         listMatchHorizontal = ArrayList()
-        getCompetitionMatch()
+        //getCompetitionMatch()
         setDate()
         onSetUpRecyclerViewHorizontal()
         getMatchRecent()
@@ -48,16 +54,54 @@ class MatchesFragment: Fragment() {
         return viewBinding.root
     }
 
-    private fun getMatchRecent() {
 
+    private fun getMatchRecent() {
+        apiInterface = ApiClient().getClient().create(ApiInterface::class.java)
+
+        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date = formatter.parse(dateString!!) ///Đổi từ string sang date
+
+        // Ngày liền trước
+        val calendarPrevious = Calendar.getInstance()
+        calendarPrevious.time = date
+        calendarPrevious.add(Calendar.DAY_OF_YEAR, -1)
+        val previousDate = calendarPrevious.time
+        val previousDateString = formatter.format(previousDate)
+
+        // Ngày liền sau
+        val calendarNext = Calendar.getInstance()
+        calendarNext.time = date
+        calendarNext.add(Calendar.DAY_OF_YEAR, 1)
+        val nextDate = calendarNext.time
+        val nextDateString = formatter.format(nextDate)
+
+        val call = apiInterface.getMatchRecentFor2day(previousDateString, nextDateString)
+        call.enqueue(object : Callback<Match>{
+            override fun onResponse(call: Call<Match>, response: Response<Match>) {
+               val resultMatch = response.body()!!
+                for (match in resultMatch.matches) {
+                    // Lấy số thứ tự của phần tử trong danh sách
+                    val position = listMatchHorizontal.size
+                    // Thêm phần tử vào danh sách
+                    listMatchHorizontal.add(match)
+                    adapterHorizontal.notifyItemInserted(position)
+                }
+
+            }
+
+            override fun onFailure(call: Call<Match>, t: Throwable) {
+                Log.d("Failed", t.message.toString())
+            }
+
+        })
     }
 
     private fun onSetUpRecyclerViewHorizontal(){
         viewBinding.recyclerViewMatchHorizontal.setHasFixedSize(false)
         val layout = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         viewBinding.recyclerViewMatchHorizontal.layoutManager = layout
-        val adapter = AdapterMatchHorizontal(listMatchHorizontal)
-        viewBinding.recyclerViewMatchHorizontal.adapter = adapter
+        adapterHorizontal = AdapterMatchHorizontal(listMatchHorizontal)
+        viewBinding.recyclerViewMatchHorizontal.adapter = adapterHorizontal
     }
 
 
@@ -72,7 +116,7 @@ class MatchesFragment: Fragment() {
             selectedDate.set(i, i2, i3)
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val formattedDate = sdf.format(selectedDate.time)
-            date = formattedDate
+            dateString = formattedDate
             if(i3.toString().length < 2){
                 viewBinding.txtDay.text = "0$i3"
             }
@@ -93,8 +137,8 @@ class MatchesFragment: Fragment() {
         selectedDate.set(year,month,day)
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val formattedDate = sdf.format(selectedDate.time)
-        date = formattedDate
-        Toast.makeText(requireContext(), date.toString(), Toast.LENGTH_SHORT).show()
+        dateString = formattedDate
+        Toast.makeText(requireContext(), dateString.toString(), Toast.LENGTH_SHORT).show()
         if(day.toString().length < 2){
             viewBinding.txtDay.text = "0$day"
         }
