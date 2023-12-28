@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.drawable.PictureDrawable
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,9 @@ import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AdapterMatchHorizontal(listMatch: ArrayList<Matche>) :
@@ -52,11 +56,24 @@ class AdapterMatchHorizontal(listMatch: ArrayList<Matche>) :
         val awayImage = match.awayTeam.crest
         Log.d("Home : ",match.homeTeam.crest)
         Log.d("Away : ",match.awayTeam.crest)
-
         loadWithPlaceholder(holder.viewBinding.LeagueImage, leagueImage)
         loadWithPlaceholder(holder.viewBinding.HomeImage, homeImage)
         loadWithPlaceholder(holder.viewBinding.AwayImage, awayImage)
-
+        if(match.status == "FINISHED"){
+            holder.viewBinding.statusMatch.text = "FT"
+            val homeScore = match.score.fullTime.home
+            val awayScore = match.score.fullTime.away
+            val finalScore = "$homeScore-$awayScore"
+            holder.viewBinding.score.text = finalScore
+        }else if(match.status == "TIMED"){
+            //Tạo format để đổi từ string thành dateTime
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+            val matchTime = inputFormat.parse(match.utcDate)
+            val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+            val matchTimeString = outputFormat.format(matchTime)
+            holder.viewBinding.statusMatch.text= matchTimeString
+            holder.viewBinding.score.visibility = View.GONE
+        }
     }
 
 

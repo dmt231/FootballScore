@@ -138,7 +138,6 @@ class MatchesFragment: Fragment() {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val formattedDate = sdf.format(selectedDate.time)
         dateString = formattedDate
-        Toast.makeText(requireContext(), dateString.toString(), Toast.LENGTH_SHORT).show()
         if(day.toString().length < 2){
             viewBinding.txtDay.text = "0$day"
         }
