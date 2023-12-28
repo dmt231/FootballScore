@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
+        android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_60sdp"
         android:background="@color/themeBackground"
@@ -28,20 +29,34 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/_25sdp"
-            android:background="@drawable/baseline_calendar_today_24" />
+            android:background="@drawable/baseline_calendar_today_24">
+
+        </ImageView>
         <TextView
             android:id="@+id/txtDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/calendarPick"
             android:layout_alignTop="@+id/calendarPick"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="1"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_11sdp"
+            android:layout_centerInParent="true"
+            android:text="21"
             android:fontFamily="sans-serif-medium"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_9ssp"
             android:textColor="@color/white"/>
+
+
+
     </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMatchHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout1"
+        android:layout_margin="@dimen/_10sdp"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
