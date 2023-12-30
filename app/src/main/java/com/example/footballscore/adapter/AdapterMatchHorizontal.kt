@@ -59,20 +59,28 @@ class AdapterMatchHorizontal(listMatch: ArrayList<Matche>) :
         loadWithPlaceholder(holder.viewBinding.LeagueImage, leagueImage)
         loadWithPlaceholder(holder.viewBinding.HomeImage, homeImage)
         loadWithPlaceholder(holder.viewBinding.AwayImage, awayImage)
-        if(match.status == "FINISHED"){
-            holder.viewBinding.statusMatch.text = "FT"
-            val homeScore = match.score.fullTime.home
-            val awayScore = match.score.fullTime.away
-            val finalScore = "$homeScore-$awayScore"
-            holder.viewBinding.score.text = finalScore
-        }else if(match.status == "TIMED"){
-            //Tạo format để đổi từ string thành dateTime
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-            val matchTime = inputFormat.parse(match.utcDate)
-            val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-            val matchTimeString = outputFormat.format(matchTime)
-            holder.viewBinding.statusMatch.text= matchTimeString
-            holder.viewBinding.score.visibility = View.GONE
+        when(match.status){
+            "FINISHED" -> {
+                holder.viewBinding.statusMatch.text = "FT"
+                val homeScore = match.score.fullTime.home
+                val awayScore = match.score.fullTime.away
+                val finalScore = "$homeScore-$awayScore"
+                holder.viewBinding.score.text = finalScore}
+            "TIMED" -> {
+                val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+                val matchTime = inputFormat.parse(match.utcDate)
+                val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+                val matchTimeString = outputFormat.format(matchTime)
+                holder.viewBinding.statusMatch.text= matchTimeString
+                holder.viewBinding.score.visibility = View.GONE
+            }
+            "IN_PLAY" -> {
+                holder.viewBinding.statusMatch.text = "In Play"
+                val homeScore = match.score.fullTime.home
+                val awayScore = match.score.fullTime.away
+                val finalScore = "$homeScore-$awayScore"
+                holder.viewBinding.score.text = finalScore
+            }
         }
     }
 
