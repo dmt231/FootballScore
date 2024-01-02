@@ -57,6 +57,29 @@
         app:layout_constraintTop_toBottomOf="@id/layout1"
         android:layout_margin="@dimen/_8sdp"
         />
+    <TextView
+        android:id="@+id/textCategories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Categories"
+        android:textSize="@dimen/_12ssp"
+        android:fontFamily="sans-serif-medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewMatchHorizontal"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_8sdp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecyclerViewCategories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/textCategories"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
