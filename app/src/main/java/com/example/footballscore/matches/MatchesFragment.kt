@@ -2,19 +2,20 @@ package com.example.footballscore.matches
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
-import android.os.Build
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
-import android.widget.Toast
-import androidx.annotation.RequiresApi
+
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.footballscore.adapter.AdapterCompetitions
 import com.example.footballscore.adapter.AdapterMatchHorizontal
 import com.example.footballscore.competitions.competion_match.Competition_Match
+import com.example.footballscore.competitions.list_competition.Competition
+import com.example.footballscore.competitions.list_competition.ListCompetitions
 
 import com.example.footballscore.databinding.MatchesLayoutBinding
 import com.example.footballscore.matches.matchModel.Match
@@ -26,8 +27,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -36,6 +36,8 @@ class MatchesFragment: Fragment() {
     private lateinit var  apiInterface : ApiInterface
     private lateinit var listMatchHorizontal : ArrayList<Matche>
     private lateinit var adapterHorizontal : AdapterMatchHorizontal
+    private lateinit var listCompetitions : ArrayList<Competition>
+    private lateinit var mainAdapter : AdapterCompetitions
     private var dateString : String? = null
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,20 +45,52 @@ class MatchesFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         viewBinding = MatchesLayoutBinding.inflate(inflater, container, false)
+        apiInterface = ApiClient().getClient().create(ApiInterface::class.java)
         listMatchHorizontal = ArrayList()
-        //getCompetitionMatch()
+        listCompetitions = ArrayList()
         setDate()
         onSetUpRecyclerViewHorizontal()
+        onSetUpMainRecyclerView()
         getMatchRecent()
+        getListCompetition()
         viewBinding.calendarPick.setOnClickListener{
             openDatePicker()
         }
         return viewBinding.root
     }
 
+    private fun getListCompetition() {
+        val call = apiInterface.getListCompetitions()
+        call.enqueue(object : Callback<ListCompetitions>{
+            override fun onResponse(
+                call: Call<ListCompetitions>,
+                response: Response<ListCompetitions>
+            ) {
+               val result = response.body()!!.competitions
+                for(league in result){
+                    Log.d("League Name : ", league.name)
+                    listCompetitions.add(league)
+                    mainAdapter.notifyDataSetChanged()
+                }
+            }
+
+            override fun onFailure(call: Call<ListCompetitions>, t: Throwable) {
+                Log.d("Failed", t.message.toString())
+            }
+
+        })
+    }
+
+    private fun onSetUpMainRecyclerView() {
+        viewBinding.RecyclerViewCategories.setHasFixedSize(false)
+        val layout = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        viewBinding.RecyclerViewCategories.layoutManager = layout
+        mainAdapter = AdapterCompetitions(listCompetitions)
+        viewBinding.RecyclerViewCategories.adapter = mainAdapter
+    }
+
 
     private fun getMatchRecent() {
-        apiInterface = ApiClient().getClient().create(ApiInterface::class.java)
 
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date = formatter.parse(dateString!!) ///Đổi từ string sang date

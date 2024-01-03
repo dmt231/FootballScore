@@ -1,5 +1,6 @@
 package com.example.footballscore.model
 import com.example.footballscore.competitions.competion_match.Competition_Match
+import com.example.footballscore.competitions.list_competition.ListCompetitions
 import com.example.footballscore.matches.matchModel.Match
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -22,4 +23,8 @@ interface ApiInterface {
     @GET("matches")
     @Headers("X-Auth-Token:fba80be2ea3b4d5d8b9e9c3d4f10a2ed")
     fun getMatchRecentFor2day(@Query("dateFrom") dateFrom : String, @Query("dateTo")  dateTo : String ) : Call<Match>
+
+    @GET("competitions")
+    @Headers("X-Auth-Token:fba80be2ea3b4d5d8b9e9c3d4f10a2ed")
+    fun getListCompetitions() : Call<ListCompetitions>
 }
