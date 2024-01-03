@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toTopOf="@id/bottomBar"
         android:layout_marginBottom="@dimen/_50sdp"
         />
-    
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
@@ -21,4 +21,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_menu"
         android:background="@color/white" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
