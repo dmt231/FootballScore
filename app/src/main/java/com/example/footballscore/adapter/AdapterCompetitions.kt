@@ -3,6 +3,7 @@ package com.example.footballscore.adapter
 import android.graphics.drawable.PictureDrawable
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
@@ -21,10 +22,13 @@ import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
-class AdapterCompetitions(listCompetitions : ArrayList<Competition>) : RecyclerView.Adapter<ViewHolderListMatch>() {
+class AdapterCompetitions(listCompetitions : ArrayList<Competition>, onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderListMatch>() {
     private var listCompetition: ArrayList<Competition>
+    private var statusDropdown = false
+    private var onClickListener : OnClickListener
     init {
         this.listCompetition = listCompetitions
+        this.onClickListener = onClickListener
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderListMatch {
         var binding = EachItemLeaguesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -40,6 +44,19 @@ class AdapterCompetitions(listCompetitions : ArrayList<Competition>) : RecyclerV
         val leagueImage = competition.emblem
         loadWithPlaceholder(holder.viewBinding.eachItemLeaguesImage, leagueImage)
         holder.viewBinding.leaguesName.text = competition.name
+        holder.viewBinding.dropDownButton.setOnClickListener {
+           if(!statusDropdown){
+               statusDropdown = true
+               onClickListener.onClickListener(competition.id)
+               holder.viewBinding.dropDownButton.setImageResource(R.drawable.baseline_keyboard_arrow_up_24)
+               holder.viewBinding.childRecyclerView.visibility = View.VISIBLE
+           }
+            else{
+               statusDropdown = false
+               holder.viewBinding.dropDownButton.setImageResource(R.drawable.baseline_keyboard_arrow_down_24)
+               holder.viewBinding.childRecyclerView.visibility = View.INVISIBLE
+           }
+        }
     }
     private fun loadWithPlaceholder(imageView: ImageView, url: String) {
         if (url.endsWith(".svg")) {
@@ -85,7 +102,9 @@ class AdapterCompetitions(listCompetitions : ArrayList<Competition>) : RecyclerV
         return connection.inputStream
     }
 
-
+    interface OnClickListener{
+        fun onClickListener(competitionId : Int)
+    }
 
 }
 class ViewHolderListMatch(viewBinding : EachItemLeaguesBinding) : RecyclerView.ViewHolder(viewBinding.root){

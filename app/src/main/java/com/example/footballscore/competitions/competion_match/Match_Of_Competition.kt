@@ -1,6 +1,6 @@
 package com.example.footballscore.competitions.competion_match
 
-data class Matche(
+data class Match_Of_Competition(
     val area: Area,
     val awayTeam: AwayTeam,
     val competition: Competition,

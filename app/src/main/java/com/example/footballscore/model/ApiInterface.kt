@@ -27,4 +27,6 @@ interface ApiInterface {
     @GET("competitions")
     @Headers("X-Auth-Token:fba80be2ea3b4d5d8b9e9c3d4f10a2ed")
     fun getListCompetitions() : Call<ListCompetitions>
+
+
 }

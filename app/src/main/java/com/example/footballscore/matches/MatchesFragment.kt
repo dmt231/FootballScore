@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.footballscore.adapter.AdapterCompetitions
 import com.example.footballscore.adapter.AdapterMatchHorizontal
 import com.example.footballscore.competitions.competion_match.Competition_Match
+import com.example.footballscore.competitions.competion_match.Match_Of_Competition
 import com.example.footballscore.competitions.list_competition.Competition
 import com.example.footballscore.competitions.list_competition.ListCompetitions
 
@@ -85,7 +86,17 @@ class MatchesFragment: Fragment() {
         viewBinding.RecyclerViewCategories.setHasFixedSize(false)
         val layout = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         viewBinding.RecyclerViewCategories.layoutManager = layout
-        mainAdapter = AdapterCompetitions(listCompetitions)
+        mainAdapter = AdapterCompetitions(listCompetitions, object : AdapterCompetitions.OnClickListener{
+            override fun onClickListener(competitionId: Int) {
+                getCompetitionMatch(competitionId, dateString!!, object : OnCallBackFromAPI{
+                    override fun callBack(listMatch: ArrayList<Match_Of_Competition>) {
+
+                    }
+
+                })
+            }
+        })
+
         viewBinding.RecyclerViewCategories.adapter = mainAdapter
     }
 
@@ -180,9 +191,9 @@ class MatchesFragment: Fragment() {
         }
     }
 
-    private fun getCompetitionMatch(){
+    private fun getCompetitionMatch(competitionId : Int, date : String, onCallBackFromAPI: OnCallBackFromAPI){
         apiInterface = ApiClient().getClient().create(ApiInterface::class.java)
-        val call = apiInterface.getMatchFromCompetitionByDate(2021,"2023-12-26", "2023-12-27" )
+        val call = apiInterface.getMatchFromCompetitionByDate(competitionId,date,date)
         call.enqueue(object: Callback<Competition_Match>{
             override fun onResponse(
                 call: Call<Competition_Match>,
@@ -190,6 +201,7 @@ class MatchesFragment: Fragment() {
             ) {
                 if(response != null){
                     val listMatch = response.body()!!.matches
+                    onCallBackFromAPI.callBack(listMatch)
                     for(match in listMatch){
                         Log.d("Info : ", match.homeTeam.name + match.score.fullTime.home + ":" + match.awayTeam.name + match.score.fullTime.away)
                     }
@@ -201,5 +213,8 @@ class MatchesFragment: Fragment() {
             }
 
         })
+    }
+    private interface OnCallBackFromAPI{
+        fun callBack(listMatch : ArrayList<Match_Of_Competition>)
     }
 }
