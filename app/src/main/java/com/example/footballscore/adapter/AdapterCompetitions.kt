@@ -11,6 +11,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.bumptech.glide.Glide
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGParseException
 import com.example.footballscore.R
@@ -52,14 +53,13 @@ class AdapterCompetitions(listCompetitions : ArrayList<Competition>, onClickList
     }
 
     override fun onBindViewHolder(holder: ViewHolderListMatch, position: Int) {
-        Log.d("Holder Position", position.toString())
         val competition = listCompetition[position]
         val leagueImage = competition.emblem
+        holder.viewBinding.eachItemLeaguesImage.visibility = View.INVISIBLE
         loadWithPlaceholder(holder.viewBinding.eachItemLeaguesImage, leagueImage)
         holder.viewBinding.leaguesName.text = competition.name
         val statusDropdown = competition.hasChildMatch
         if(statusDropdown){
-            Log.d("RecyclerView Child", "true")
             holder.viewBinding.expandableLayout.visibility = View.VISIBLE
             holder.viewBinding.dropDownButton.setImageResource(R.drawable.baseline_keyboard_arrow_up_24)
             val adapter = AdapterMatchOfCompetition(listMatch)
@@ -87,13 +87,10 @@ class AdapterCompetitions(listCompetitions : ArrayList<Competition>, onClickList
         if (url.endsWith(".svg")) {
             loadSvgImage(imageView, url)
         } else {
-            // If it's not an SVG, use Coil as usual
-            imageView.load(url) {
-                crossfade(true)
-                crossfade(500)
-                placeholder(R.drawable.football_club)
-                transformations()
-            }
+            Glide.with(imageView.context)
+                .load(url)
+                .into(imageView)
+            imageView.visibility = View.VISIBLE
         }
     }
     private fun loadSvgImage(imageView: ImageView, url: String) {
@@ -105,6 +102,7 @@ class AdapterCompetitions(listCompetitions : ArrayList<Competition>, onClickList
                 withContext(Dispatchers.Main) {
                     val drawable = PictureDrawable(svg.renderToPicture())
                     imageView.setImageDrawable(drawable)
+                    imageView.visibility = View.VISIBLE
                 }
             } catch (e: IOException) {
                 e.printStackTrace()

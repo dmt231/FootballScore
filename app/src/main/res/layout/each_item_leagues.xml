@@ -26,6 +26,7 @@
                 android:src="@drawable/football_club"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:visibility="invisible"
                 app:riv_oval="true" />
 
             <TextView
