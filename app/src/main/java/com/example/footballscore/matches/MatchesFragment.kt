@@ -87,10 +87,11 @@ class MatchesFragment: Fragment() {
         val layout = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         viewBinding.RecyclerViewCategories.layoutManager = layout
         mainAdapter = AdapterCompetitions(listCompetitions, object : AdapterCompetitions.OnClickListener{
-            override fun onClickListener(competitionId: Int) {
+            override fun onClickListener(competitionId: Int, position : Int) {
+                Log.d("dateString", dateString.toString())
                 getCompetitionMatch(competitionId, dateString!!, object : OnCallBackFromAPI{
                     override fun callBack(listMatch: ArrayList<Match_Of_Competition>) {
-
+                        mainAdapter.updateListMatch(listMatch, position)
                     }
 
                 })
@@ -199,13 +200,11 @@ class MatchesFragment: Fragment() {
                 call: Call<Competition_Match>,
                 response: Response<Competition_Match>
             ) {
-                if(response != null){
-                    val listMatch = response.body()!!.matches
-                    onCallBackFromAPI.callBack(listMatch)
-                    for(match in listMatch){
-                        Log.d("Info : ", match.homeTeam.name + match.score.fullTime.home + ":" + match.awayTeam.name + match.score.fullTime.away)
-                    }
+                val listMatch = response.body()!!.matches
+                for(match in listMatch){
+                    Log.d("Info : ", match.homeTeam.name + match.score.fullTime.home + ":" + match.awayTeam.name + match.score.fullTime.away)
                 }
+                onCallBackFromAPI.callBack(listMatch)
             }
 
             override fun onFailure(call: Call<Competition_Match>, t: Throwable) {

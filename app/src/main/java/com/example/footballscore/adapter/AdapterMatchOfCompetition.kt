@@ -2,7 +2,6 @@ package com.example.footballscore.adapter
 import android.annotation.SuppressLint
 import android.graphics.drawable.PictureDrawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
@@ -30,12 +29,11 @@ class AdapterMatchOfCompetition(listMatch : ArrayList<Match_Of_Competition>) : R
     init {
         this.listMatch = listMatch
     }
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolderMatchOfCompetition {
-        var binding = NestedMatchLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = NestedMatchLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolderMatchOfCompetition(binding)
     }
 
@@ -48,8 +46,8 @@ class AdapterMatchOfCompetition(listMatch : ArrayList<Match_Of_Competition>) : R
         val model = listMatch[position]
         loadWithPlaceholder(holder.viewBinding.imageHome, model.homeTeam.crest)
         loadWithPlaceholder(holder.viewBinding.imageAway, model.awayTeam.crest)
-        val homeScore = Integer.parseInt(model.score.fullTime.home.toString())
-        val awayScore = Integer.parseInt(model.score.fullTime.away.toString())
+        val homeScore = model.score.fullTime.home.toString().toDouble().toInt()
+        val awayScore = model.score.fullTime.away.toString().toDouble().toInt()
         holder.viewBinding.scoreHome.text = homeScore.toString()
         holder.viewBinding.scoreAway.text = awayScore.toString()
         holder.viewBinding.nameHome.text = model.homeTeam.name

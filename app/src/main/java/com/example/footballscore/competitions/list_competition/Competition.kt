@@ -10,5 +10,6 @@ data class Competition(
     val name: String,
     val numberOfAvailableSeasons: Int,
     val plan: String,
-    val type: String
+    val type: String,
+    var hasChildMatch: Boolean = false,
 )
