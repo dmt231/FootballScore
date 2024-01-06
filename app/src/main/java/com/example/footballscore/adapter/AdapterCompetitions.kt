@@ -30,16 +30,22 @@ import java.net.URL
 class AdapterCompetitions(listCompetitions : ArrayList<Competition>, onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolderListMatch>() {
     private var listCompetition: ArrayList<Competition>
     private var onClickListener : OnClickListener
-    private var listMatch : ArrayList<Match_Of_Competition> = ArrayList()
     init {
         this.listCompetition = listCompetitions
         this.onClickListener = onClickListener
     }
     fun updateListMatch(listMatchResult : ArrayList<Match_Of_Competition>, position: Int){
-        this.listMatch.clear()
-        for(match in listMatchResult){
-            this.listMatch.add(match)
-            Log.d("Match : ", match.homeTeam.name + match.score.fullTime.home + ":" + match.awayTeam.name + match.score.fullTime.away)
+        if(listCompetition[position].childMatch != null) {
+            listCompetition[position].childMatch.clear()
+            for (match in listMatchResult) {
+                listCompetition[position].childMatch.add(match)
+            }
+        }
+        else {
+            listCompetition[position].childMatch = ArrayList()
+            for (match in listMatchResult) {
+                listCompetition[position].childMatch.add(match)
+            }
         }
         notifyItemChanged(position)
     }
@@ -62,14 +68,16 @@ class AdapterCompetitions(listCompetitions : ArrayList<Competition>, onClickList
         if(statusDropdown){
             holder.viewBinding.expandableLayout.visibility = View.VISIBLE
             holder.viewBinding.dropDownButton.setImageResource(R.drawable.baseline_keyboard_arrow_up_24)
-            val adapter = AdapterMatchOfCompetition(listMatch)
+        }else{
+            holder.viewBinding.expandableLayout.visibility = View.GONE
+            holder.viewBinding.dropDownButton.setImageResource(R.drawable.baseline_keyboard_arrow_down_24)
+        }
+        if(competition.childMatch != null) {
+            val adapter = AdapterMatchOfCompetition(competition.childMatch)
             val layout = LinearLayoutManager(holder.itemView.context)
             holder.viewBinding.childRecyclerView.layoutManager = layout
             holder.viewBinding.childRecyclerView.setHasFixedSize(true)
             holder.viewBinding.childRecyclerView.adapter = adapter
-        }else{
-            holder.viewBinding.expandableLayout.visibility = View.GONE
-            holder.viewBinding.dropDownButton.setImageResource(R.drawable.baseline_keyboard_arrow_down_24)
         }
         holder.viewBinding.dropDownButton.setOnClickListener {
            if(!statusDropdown){

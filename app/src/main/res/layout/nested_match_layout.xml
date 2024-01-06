@@ -71,7 +71,6 @@
                 android:id="@+id/scoreHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3"
                 android:textColor="@color/grayTheme"
                 android:fontFamily="sans-serif-medium"
                 android:textSize="@dimen/_11ssp"
@@ -96,8 +95,8 @@
                 android:layout_height="wrap_content"
                 android:text="Home Club"
                 android:maxLines="2"
-                android:maxWidth="@dimen/_100sdp"
-                android:textAlignment="center"
+                android:maxWidth="@dimen/_180sdp"
+                android:textAlignment="textStart"
                 android:textColor="@color/grayTheme"
                 android:fontFamily="sans-serif-medium"
                 android:textSize="@dimen/_10ssp"
@@ -107,7 +106,6 @@
                 android:id="@+id/scoreAway"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
                 android:textColor="@color/grayTheme"
                 android:fontFamily="sans-serif-medium"
                 android:textSize="@dimen/_11ssp"
@@ -117,5 +115,4 @@
                 />
         </RelativeLayout>
     </LinearLayout>
-
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.bumptech.glide.Glide
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGParseException
 import com.example.footballscore.R
@@ -46,10 +47,6 @@ class AdapterMatchOfCompetition(listMatch : ArrayList<Match_Of_Competition>) : R
         val model = listMatch[position]
         loadWithPlaceholder(holder.viewBinding.imageHome, model.homeTeam.crest)
         loadWithPlaceholder(holder.viewBinding.imageAway, model.awayTeam.crest)
-        val homeScore = model.score.fullTime.home.toString().toDouble().toInt()
-        val awayScore = model.score.fullTime.away.toString().toDouble().toInt()
-        holder.viewBinding.scoreHome.text = homeScore.toString()
-        holder.viewBinding.scoreAway.text = awayScore.toString()
         holder.viewBinding.nameHome.text = model.homeTeam.name
         holder.viewBinding.nameAway.text = model.awayTeam.name
         if(getDateByYearMonthDay(model.utcDate) == getDateRecent()){
@@ -57,6 +54,10 @@ class AdapterMatchOfCompetition(listMatch : ArrayList<Match_Of_Competition>) : R
                 "FINISHED" -> {
                     holder.viewBinding.statusMatch.text = "FT"
                     holder.viewBinding.timeMatch.text = getDateByHourMinutes(model.utcDate)
+                    val homeScore = model.score.fullTime.home.toString().toDouble().toInt()
+                    val awayScore = model.score.fullTime.away.toString().toDouble().toInt()
+                    holder.viewBinding.scoreHome.text = homeScore.toString()
+                    holder.viewBinding.scoreAway.text = awayScore.toString()
                 }
                 "TIMED" -> {
                     holder.viewBinding.timeMatch.text = getDateByHourMinutes(model.utcDate)
@@ -65,6 +66,14 @@ class AdapterMatchOfCompetition(listMatch : ArrayList<Match_Of_Competition>) : R
                 "IN_PLAY" -> {
                     holder.viewBinding.statusMatch.text = "In Play"
                     holder.viewBinding.timeMatch.text = getDateByHourMinutes(model.utcDate)
+                    val homeScore = model.score.fullTime.home.toString().toDouble().toInt()
+                    val awayScore = model.score.fullTime.away.toString().toDouble().toInt()
+                    holder.viewBinding.scoreHome.text = homeScore.toString()
+                    holder.viewBinding.scoreAway.text = awayScore.toString()
+                }
+                "POSTPONED" -> {
+                    holder.viewBinding.scoreHome.text = "-"
+                    holder.viewBinding.scoreAway.text = "-"
                 }
             }
         }else{
@@ -72,10 +81,18 @@ class AdapterMatchOfCompetition(listMatch : ArrayList<Match_Of_Competition>) : R
                 "FINISHED" -> {
                     holder.viewBinding.statusMatch.text = "FT"
                     holder.viewBinding.timeMatch.text = getDateByDayMonthYear(model.utcDate)
+                    val homeScore = model.score.fullTime.home.toString().toDouble().toInt()
+                    val awayScore = model.score.fullTime.away.toString().toDouble().toInt()
+                    holder.viewBinding.scoreHome.text = homeScore.toString()
+                    holder.viewBinding.scoreAway.text = awayScore.toString()
                 }
                 "TIMED" -> {
                     holder.viewBinding.timeMatch.text = getDateByDayMonthYear(model.utcDate)
                     holder.viewBinding.statusMatch.text = getDateByHourMinutes(model.utcDate)
+                }
+                "POSTPONED" -> {
+                    holder.viewBinding.scoreHome.text = "-"
+                    holder.viewBinding.scoreAway.text = "-"
                 }
             }
         }
@@ -85,12 +102,9 @@ class AdapterMatchOfCompetition(listMatch : ArrayList<Match_Of_Competition>) : R
             loadSvgImage(imageView, url)
         } else {
             // If it's not an SVG, use Coil as usual
-            imageView.load(url) {
-                crossfade(true)
-                crossfade(500)
-                placeholder(R.drawable.football_club)
-                transformations()
-            }
+            Glide.with(imageView.context)
+                .load(url)
+                .into(imageView)
         }
     }
     private fun loadSvgImage(imageView: ImageView, url: String) {
