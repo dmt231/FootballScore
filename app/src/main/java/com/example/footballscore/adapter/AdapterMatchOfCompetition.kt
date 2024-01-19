@@ -94,6 +94,14 @@ class AdapterMatchOfCompetition(listMatch : ArrayList<Match_Of_Competition>) : R
                     holder.viewBinding.scoreHome.text = "-"
                     holder.viewBinding.scoreAway.text = "-"
                 }
+                "IN_PLAY" -> {
+                    holder.viewBinding.statusMatch.text = "In Play"
+                    holder.viewBinding.timeMatch.text = getDateByHourMinutes(model.utcDate)
+                    val homeScore = model.score.fullTime.home.toString().toDouble().toInt()
+                    val awayScore = model.score.fullTime.away.toString().toDouble().toInt()
+                    holder.viewBinding.scoreHome.text = homeScore.toString()
+                    holder.viewBinding.scoreAway.text = awayScore.toString()
+                }
             }
         }
     }

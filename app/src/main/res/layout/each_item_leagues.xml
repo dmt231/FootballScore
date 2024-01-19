@@ -49,8 +49,6 @@
                 android:layout_marginStart="@dimen/_160sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:fontFamily="sans-serif-medium"
-                android:text="3"
-                android:visibility="invisible"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintLeft_toLeftOf="@id/leaguesName"
                 app:layout_constraintTop_toTopOf="parent" />

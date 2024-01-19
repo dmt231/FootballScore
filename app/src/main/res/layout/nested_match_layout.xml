@@ -17,7 +17,6 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="sans-serif-medium"
-            android:text="03/01/2024"
             android:textColor="@color/grayTheme"
             android:textSize="@dimen/_10ssp" />
 

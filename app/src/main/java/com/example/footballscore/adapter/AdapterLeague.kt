@@ -38,7 +38,6 @@ class AdapterLeague(listCompetitions : ArrayList<Competition>) : RecyclerView.Ad
 
     override fun onBindViewHolder(holder: AdapterLeagueViewHolder, position: Int) {
         val league = listCompetition[position]
-        Log.d("League : ", league.name)
         holder.viewBinding.leaguesName.text = league.name
         loadWithPlaceholder(holder.viewBinding.eachItemLeaguesImage, league.emblem)
     }

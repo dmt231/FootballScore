@@ -68,11 +68,16 @@ class AdapterCompetitions(listCompetitions : ArrayList<Competition>, onClickList
         if(statusDropdown){
             holder.viewBinding.expandableLayout.visibility = View.VISIBLE
             holder.viewBinding.dropDownButton.setImageResource(R.drawable.baseline_keyboard_arrow_up_24)
+            holder.viewBinding.numberOfMatch.visibility = View.VISIBLE
         }else{
             holder.viewBinding.expandableLayout.visibility = View.GONE
             holder.viewBinding.dropDownButton.setImageResource(R.drawable.baseline_keyboard_arrow_down_24)
+            holder.viewBinding.numberOfMatch.visibility = View.INVISIBLE
         }
         if(competition.childMatch != null) {
+            if(competition.childMatch.size != 0) {
+                holder.viewBinding.numberOfMatch.text = competition.childMatch.size.toString()
+            }
             val adapter = AdapterMatchOfCompetition(competition.childMatch)
             val layout = LinearLayoutManager(holder.itemView.context)
             holder.viewBinding.childRecyclerView.layoutManager = layout
