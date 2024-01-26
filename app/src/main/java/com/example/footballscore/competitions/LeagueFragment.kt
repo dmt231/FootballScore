@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.footballscore.R
 import com.example.footballscore.adapter.AdapterLeague
 import com.example.footballscore.competitions.list_competition.Competition
 import com.example.footballscore.competitions.list_competition.ListCompetitions
@@ -63,8 +64,24 @@ class LeagueFragment : Fragment() {
         viewBinding.leagueRecyclerView.setHasFixedSize(true)
         val layout = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         viewBinding.leagueRecyclerView.layoutManager = layout
-        adapterLeague = AdapterLeague(listLeague)
+        adapterLeague = AdapterLeague(listLeague, object : AdapterLeague.OnClickListener{
+            override fun onClick(league: Competition) {
+                onChangeToDetailLeague(league)
+                Log.d("CLick ", "Yes")
+            }
+        })
         viewBinding.leagueRecyclerView.adapter = adapterLeague
     }
-
+    private fun onChangeToDetailLeague(league : Competition){
+        val detailLeagueFragment = DetailLeagueFragment()
+        val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
+        val bundle = Bundle()
+        bundle.putInt("idLeague", league.id)
+        bundle.putString("imageLeague", league.emblem)
+        bundle.putString("nameLeague", league.name)
+        detailLeagueFragment.arguments = bundle
+        fragmentTrans.add(R.id.mainLayout, detailLeagueFragment)
+        fragmentTrans.addToBackStack(detailLeagueFragment.tag)
+        fragmentTrans.commit()
+    }
 }

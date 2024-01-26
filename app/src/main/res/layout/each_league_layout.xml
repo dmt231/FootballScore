@@ -3,44 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/leagueCardView"
     android:layout_margin="@dimen/_8sdp"
     android:minHeight="@dimen/_55sdp"
     app:cardCornerRadius="10dp"
+    android:focusable="true"
     app:cardElevation="8dp">
 
-    <LinearLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:focusable="false"
+        >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/each_Item_leagues_Image"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:src="@drawable/football_club"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_oval="true" />
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/each_Item_leagues_Image"
-                android:layout_width="@dimen/_40sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:src="@drawable/football_club"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:visibility="invisible"
-                app:riv_oval="true" />
+        <TextView
+            android:id="@+id/leaguesName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Leagues"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintStart_toEndOf="@id/each_Item_leagues_Image"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/leaguesName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_18sdp"
-                android:fontFamily="sans-serif-medium"
-                android:text="Leagues"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14ssp"
-                app:layout_constraintStart_toEndOf="@id/each_Item_leagues_Image"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
 </androidx.cardview.widget.CardView>

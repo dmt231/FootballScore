@@ -22,10 +22,12 @@ import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
-class AdapterLeague(listCompetitions : ArrayList<Competition>) : RecyclerView.Adapter<AdapterLeagueViewHolder>() {
+class AdapterLeague(listCompetitions : ArrayList<Competition>, onClickListener: OnClickListener) : RecyclerView.Adapter<AdapterLeagueViewHolder>() {
     private var listCompetition : ArrayList<Competition>
+    private var onClickListener : OnClickListener
     init {
         this.listCompetition = listCompetitions
+        this.onClickListener = onClickListener
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterLeagueViewHolder {
         val viewBinding = EachLeagueLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -40,6 +42,9 @@ class AdapterLeague(listCompetitions : ArrayList<Competition>) : RecyclerView.Ad
         val league = listCompetition[position]
         holder.viewBinding.leaguesName.text = league.name
         loadWithPlaceholder(holder.viewBinding.eachItemLeaguesImage, league.emblem)
+        holder.viewBinding.leagueCardView.setOnClickListener {
+            this.onClickListener.onClick(league)
+        }
     }
     private fun loadWithPlaceholder(imageView: ImageView, url: String) {
         if (url.endsWith(".svg")) {
@@ -81,6 +86,9 @@ class AdapterLeague(listCompetitions : ArrayList<Competition>) : RecyclerView.Ad
         val connection: HttpURLConnection = URL(url).openConnection() as HttpURLConnection
         connection.connect()
         return connection.inputStream
+    }
+    interface OnClickListener{
+        fun onClick(league : Competition)
     }
 }
 class AdapterLeagueViewHolder(viewBinding : EachLeagueLayoutBinding) : RecyclerView.ViewHolder(viewBinding.root){
