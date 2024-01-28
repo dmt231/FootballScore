@@ -67,7 +67,6 @@ class LeagueFragment : Fragment() {
         adapterLeague = AdapterLeague(listLeague, object : AdapterLeague.OnClickListener{
             override fun onClick(league: Competition) {
                 onChangeToDetailLeague(league)
-                Log.d("CLick ", "Yes")
             }
         })
         viewBinding.leagueRecyclerView.adapter = adapterLeague

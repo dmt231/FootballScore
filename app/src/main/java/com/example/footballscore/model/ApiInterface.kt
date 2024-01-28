@@ -1,6 +1,7 @@
 package com.example.footballscore.model
 import com.example.footballscore.competitions.competion_match.Competition_Match
 import com.example.footballscore.competitions.list_competition.ListCompetitions
+import com.example.footballscore.competitions.standings.StandingsModels
 import com.example.footballscore.matches.matchModel.Match
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -28,5 +29,7 @@ interface ApiInterface {
     @Headers("X-Auth-Token:fba80be2ea3b4d5d8b9e9c3d4f10a2ed")
     fun getListCompetitions() : Call<ListCompetitions>
 
-
+    @GET("competitions/{id}/standings")
+    @Headers("X-Auth-Token:fba80be2ea3b4d5d8b9e9c3d4f10a2ed")
+    fun getStandingsRecentForLeague(@Path("id") competitionId : Int) : Call<StandingsModels>
 }

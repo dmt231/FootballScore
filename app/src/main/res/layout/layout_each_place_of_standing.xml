@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="#"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageTeam"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintStart_toStartOf="@id/place"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/teamName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Team"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintStart_toEndOf="@id/imageTeam"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_130sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="P"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintStart_toStartOf="@id/place"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/win"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="W"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintStart_toStartOf="@id/play"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/draw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="D"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintStart_toStartOf="@id/win"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/lose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="L"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintStart_toStartOf="@id/draw"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/diff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="GD"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintStart_toStartOf="@id/lose"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="PTS"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintStart_toStartOf="@id/diff"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
