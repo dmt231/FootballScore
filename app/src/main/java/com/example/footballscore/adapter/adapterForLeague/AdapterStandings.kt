@@ -13,6 +13,7 @@ import com.caverock.androidsvg.SVGParseException
 import com.example.footballscore.R
 import com.example.footballscore.competitions.standings.Table
 import com.example.footballscore.databinding.LayoutEachPlaceOfStandingBinding
+import com.example.footballscore.databinding.LayoutGroupStageStandingBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,47 +23,89 @@ import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
-class AdapterStandings(standings : ArrayList<Table>) : RecyclerView.Adapter<ViewHolderStanding>() {
-    private  var standings : ArrayList<Table>
+class AdapterStandings(standings: ArrayList<Table>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var standings: ArrayList<Table>
+    private val headerView = 0
+    private val itemView = 1
+    private val nameGroup = 2
+
     init {
         this.standings = standings
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderStanding {
-        var binding = LayoutEachPlaceOfStandingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolderStanding(binding)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            nameGroup -> {
+                val binding = LayoutGroupStageStandingBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                ViewHolderGroupName(binding)
+            }
+            else -> {
+                val binding = LayoutEachPlaceOfStandingBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                ViewHolderStanding(binding)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
         return standings.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolderStanding, position: Int) {
-       val model = standings[position]
-        if(model.team == null){
-            holder.viewBinding.imageTeam.visibility = View.GONE
-        }
-        else{
-            //Change textColor to Black
-           holder.viewBinding.place.setTextColor(Color.BLACK)
-           holder.viewBinding.teamName.setTextColor(Color.BLACK)
-           holder.viewBinding.play.setTextColor(Color.BLACK)
-           holder.viewBinding.win.setTextColor(Color.BLACK)
-           holder.viewBinding.draw.setTextColor(Color.BLACK)
-           holder.viewBinding.lose.setTextColor(Color.BLACK)
-           holder.viewBinding.diff.setTextColor(Color.BLACK)
-           holder.viewBinding.points .setTextColor(Color.BLACK)
-            //Binding club standing
-            holder.viewBinding.place.text = model.position.toString()
-            loadWithPlaceholder(holder.viewBinding.imageTeam, model.team!!.crest)
-            holder.viewBinding.teamName.text = model.team!!.shortName
-            holder.viewBinding.play.text = model.playedGames.toString()
-            holder.viewBinding.win.text = model.won.toString()
-            holder.viewBinding.lose.text = model.lost.toString()
-            holder.viewBinding.draw.text = model.draw.toString()
-            holder.viewBinding.diff.text = model.goalDifference.toString()
-            holder.viewBinding.points.text = model.points.toString()
+    override fun getItemViewType(position: Int): Int {
+        //return if (standings[position].position == 0) headerView else itemView
+        if (standings[position].group != null) {
+            return nameGroup
+        } else if (standings[position].position == 0) {
+            return headerView
+        } else {
+            return itemView
         }
     }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (getItemViewType(position)) {
+            nameGroup -> {
+                val nameGroupHolder = holder as ViewHolderGroupName
+                nameGroupHolder.viewBinding.nameGroup.text = standings[position].group
+            }
+            headerView -> {
+                val standingHolder = holder as ViewHolderStanding
+                standingHolder.viewBinding.imageTeam.visibility = View.GONE
+            }
+            itemView -> {
+                val standingHolder = holder as ViewHolderStanding
+                val model = standings[position]
+                //Change textColor to Black
+               standingHolder.viewBinding.place.setTextColor(Color.BLACK)
+               standingHolder.viewBinding.teamName.setTextColor(Color.BLACK)
+               standingHolder.viewBinding.play.setTextColor(Color.BLACK)
+               standingHolder.viewBinding.win.setTextColor(Color.BLACK)
+               standingHolder.viewBinding.draw.setTextColor(Color.BLACK)
+               standingHolder.viewBinding.lose.setTextColor(Color.BLACK)
+               standingHolder.viewBinding.diff.setTextColor(Color.BLACK)
+               standingHolder.viewBinding.points.setTextColor(Color.BLACK)
+                //Binding club standing
+                standingHolder.viewBinding.place.text = model.position.toString()
+                loadWithPlaceholder(holder.viewBinding.imageTeam, model.team!!.crest)
+                standingHolder.viewBinding.teamName.text = model.team!!.shortName
+                standingHolder.viewBinding.play.text = model.playedGames.toString()
+                standingHolder.viewBinding.win.text = model.won.toString()
+                standingHolder.viewBinding.lose.text = model.lost.toString()
+                standingHolder.viewBinding.draw.text = model.draw.toString()
+                standingHolder.viewBinding.diff.text = model.goalDifference.toString()
+                standingHolder.viewBinding.points.text = model.points.toString()
+            }
+        }
+    }
+
     private fun loadWithPlaceholder(imageView: ImageView, url: String) {
         if (url.endsWith(".svg")) {
             loadSvgImage(imageView, url)
@@ -73,6 +116,7 @@ class AdapterStandings(standings : ArrayList<Table>) : RecyclerView.Adapter<View
             imageView.visibility = View.VISIBLE
         }
     }
+
     private fun loadSvgImage(imageView: ImageView, url: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -105,8 +149,20 @@ class AdapterStandings(standings : ArrayList<Table>) : RecyclerView.Adapter<View
         return connection.inputStream
     }
 }
-class ViewHolderStanding(viewBinding : LayoutEachPlaceOfStandingBinding) : RecyclerView.ViewHolder(viewBinding.root){
-    var viewBinding : LayoutEachPlaceOfStandingBinding
+
+class ViewHolderStanding(viewBinding: LayoutEachPlaceOfStandingBinding) :
+    RecyclerView.ViewHolder(viewBinding.root) {
+    var viewBinding: LayoutEachPlaceOfStandingBinding
+
+    init {
+        this.viewBinding = viewBinding
+    }
+}
+
+class ViewHolderGroupName(viewBinding: LayoutGroupStageStandingBinding) :
+    RecyclerView.ViewHolder(viewBinding.root) {
+    var viewBinding: LayoutGroupStageStandingBinding
+
     init {
         this.viewBinding = viewBinding
     }

@@ -12,4 +12,5 @@ class Table() {
     var position: Int? =null
     var team: Team? =null
     var won: Int? =null
+    var group : String? = null
 }
