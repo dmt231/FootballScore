@@ -2,4 +2,5 @@
     <string name="app_name">FootballScore</string>
     <string name="livescore">Livescore</string>
     <string name="league">League</string>
+    <string name="season">Season</string>
 </resources>

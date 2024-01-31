@@ -32,7 +32,6 @@ class DetailLeagueFragment : Fragment() {
     private lateinit var leagueName : String
     private lateinit var leagueImage : String
     private var leagueId : Int? = null
-    private val season  =  arrayOf<String>("2020-2021","2021-2022","2022-2023","2023-2024")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,7 +46,6 @@ class DetailLeagueFragment : Fragment() {
         }
         getBundle()
         loadData()
-        setUpSpinner()
         setUpTabLayoutViewPager()
         return viewBinding.root
     }
@@ -111,20 +109,12 @@ class DetailLeagueFragment : Fragment() {
         connection.connect()
         return connection.inputStream
     }
-    private fun setUpSpinner(){
-        val arrayList = season.toList()
-        val arrayAdapter : ArrayAdapter<String> = ArrayAdapter(requireContext(),R.layout.layout_select_season,arrayList)
-        viewBinding.spinnerSeason.adapter = arrayAdapter
-
-        val defaultSelectionIndex = arrayList.indexOf("2023-2024")
-        viewBinding.spinnerSeason.setSelection(defaultSelectionIndex)
-    }
     private fun setUpTabLayoutViewPager(){
         viewBinding.tabLayout.addTab(viewBinding.tabLayout.newTab().setText("Standings"))
         viewBinding.tabLayout.addTab(viewBinding.tabLayout.newTab().setText("Matches"))
         viewBinding.tabLayout.addTab(viewBinding.tabLayout.newTab().setText("Top Score"))
         viewBinding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
-        viewpageAdapter = LeagueViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle,leagueId!!)
+        viewpageAdapter = LeagueViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle,leagueId!!, leagueImage, leagueName)
         viewBinding.viewPager.adapter = viewpageAdapter
 
         viewBinding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{

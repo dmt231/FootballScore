@@ -92,8 +92,10 @@ class AdapterStandings(standings: ArrayList<Table>) :
                standingHolder.viewBinding.lose.setTextColor(Color.BLACK)
                standingHolder.viewBinding.diff.setTextColor(Color.BLACK)
                standingHolder.viewBinding.points.setTextColor(Color.BLACK)
+
                 //Binding club standing
                 standingHolder.viewBinding.place.text = model.position.toString()
+                standingHolder.viewBinding.imageTeam.visibility = View.INVISIBLE
                 loadWithPlaceholder(holder.viewBinding.imageTeam, model.team!!.crest)
                 standingHolder.viewBinding.teamName.text = model.team!!.shortName
                 standingHolder.viewBinding.play.text = model.playedGames.toString()

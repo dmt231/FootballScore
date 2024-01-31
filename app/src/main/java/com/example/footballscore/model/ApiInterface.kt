@@ -32,4 +32,8 @@ interface ApiInterface {
     @GET("competitions/{id}/standings")
     @Headers("X-Auth-Token:fba80be2ea3b4d5d8b9e9c3d4f10a2ed")
     fun getStandingsRecentForLeague(@Path("id") competitionId : Int) : Call<StandingsModels>
+
+    @GET("competitions/{id}/standings")
+    @Headers("X-Auth-Token:fba80be2ea3b4d5d8b9e9c3d4f10a2ed")
+    fun getStandingsBySeasonForLeague(@Path("id") competitionId : Int, @Query("season") season : Int) : Call<StandingsModels>
 }

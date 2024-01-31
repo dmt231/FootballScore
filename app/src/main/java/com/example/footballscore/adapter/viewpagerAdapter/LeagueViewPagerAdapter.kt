@@ -8,12 +8,18 @@ import com.example.footballscore.competitions.matches.MatchesOfLeagueFragment
 import com.example.footballscore.competitions.standings.StandingsFragment
 import com.example.footballscore.competitions.top_score.TopScoreFragment
 
-class LeagueViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle, competitionId : Int) : FragmentStateAdapter(fragmentManager, lifecycle) {
+class LeagueViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle, competitionId : Int, competitionImage : String,
+                                competitionName : String) : FragmentStateAdapter(fragmentManager, lifecycle) {
 
     private var competitionId: Int
     private val numberPages = 3
+    private var competitionImage : String
+    private var competitionName : String
+
     init {
         this.competitionId = competitionId
+        this.competitionImage = competitionImage
+        this.competitionName  = competitionName
     }
     override fun getItemCount(): Int {
         return numberPages
@@ -22,7 +28,7 @@ class LeagueViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecy
     override fun createFragment(position: Int): Fragment {
         when(position){
             0 -> {
-                return StandingsFragment(competitionId)
+                return StandingsFragment(competitionId, competitionImage, competitionName)
             }
             1 ->{
                 return MatchesOfLeagueFragment()
@@ -31,6 +37,6 @@ class LeagueViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecy
                 return TopScoreFragment()
             }
         }
-        return StandingsFragment(competitionId)
+        return StandingsFragment(competitionId, competitionImage, competitionName)
     }
 }
