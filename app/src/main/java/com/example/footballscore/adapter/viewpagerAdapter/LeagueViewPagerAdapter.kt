@@ -31,7 +31,7 @@ class LeagueViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecy
                 return StandingsFragment(competitionId, competitionImage, competitionName)
             }
             1 ->{
-                return MatchesOfLeagueFragment()
+                return MatchesOfLeagueFragment(competitionId, competitionImage, competitionName)
             }
             2->{
                 return TopScoreFragment()

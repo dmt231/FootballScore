@@ -45,16 +45,16 @@ class AdapterMatchOfCompetition(listMatch : ArrayList<Match_Of_Competition>) : R
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolderMatchOfCompetition, position: Int) {
         val model = listMatch[position]
-        loadWithPlaceholder(holder.viewBinding.imageHome, model.homeTeam.crest)
-        loadWithPlaceholder(holder.viewBinding.imageAway, model.awayTeam.crest)
-        holder.viewBinding.nameHome.text = model.homeTeam.name
-        holder.viewBinding.nameAway.text = model.awayTeam.name
-        if(getDateByYearMonthDay(model.utcDate) == getDateRecent()){
+        loadWithPlaceholder(holder.viewBinding.imageHome, model.homeTeam!!.crest)
+        loadWithPlaceholder(holder.viewBinding.imageAway, model.awayTeam!!.crest)
+        holder.viewBinding.nameHome.text = model.homeTeam!!.name
+        holder.viewBinding.nameAway.text = model.awayTeam!!.name
+        if(getDateByYearMonthDay(model.utcDate!!) == getDateRecent()){
             when(model.status){
                 "FINISHED" -> {
                     holder.viewBinding.statusMatch.text = "FT"
                     holder.viewBinding.timeMatch.text = getDateByHourMinutes(model.utcDate)
-                    val homeScore = model.score.fullTime.home.toString().toDouble().toInt()
+                    val homeScore = model.score!!.fullTime.home.toString().toDouble().toInt()
                     val awayScore = model.score.fullTime.away.toString().toDouble().toInt()
                     holder.viewBinding.scoreHome.text = homeScore.toString()
                     holder.viewBinding.scoreAway.text = awayScore.toString()
@@ -66,8 +66,8 @@ class AdapterMatchOfCompetition(listMatch : ArrayList<Match_Of_Competition>) : R
                 "IN_PLAY" -> {
                     holder.viewBinding.statusMatch.text = "In Play"
                     holder.viewBinding.timeMatch.text = getDateByHourMinutes(model.utcDate)
-                    val homeScore = model.score.fullTime.home.toString().toDouble().toInt()
-                    val awayScore = model.score.fullTime.away.toString().toDouble().toInt()
+                    val homeScore = model.score!!.fullTime.home.toString().toDouble().toInt()
+                    val awayScore = model.score!!.fullTime.away.toString().toDouble().toInt()
                     holder.viewBinding.scoreHome.text = homeScore.toString()
                     holder.viewBinding.scoreAway.text = awayScore.toString()
                 }
@@ -81,7 +81,7 @@ class AdapterMatchOfCompetition(listMatch : ArrayList<Match_Of_Competition>) : R
                 "FINISHED" -> {
                     holder.viewBinding.statusMatch.text = "FT"
                     holder.viewBinding.timeMatch.text = getDateByDayMonthYear(model.utcDate)
-                    val homeScore = model.score.fullTime.home.toString().toDouble().toInt()
+                    val homeScore = model.score!!.fullTime.home.toString().toDouble().toInt()
                     val awayScore = model.score.fullTime.away.toString().toDouble().toInt()
                     holder.viewBinding.scoreHome.text = homeScore.toString()
                     holder.viewBinding.scoreAway.text = awayScore.toString()
@@ -97,7 +97,7 @@ class AdapterMatchOfCompetition(listMatch : ArrayList<Match_Of_Competition>) : R
                 "IN_PLAY" -> {
                     holder.viewBinding.statusMatch.text = "In Play"
                     holder.viewBinding.timeMatch.text = getDateByHourMinutes(model.utcDate)
-                    val homeScore = model.score.fullTime.home.toString().toDouble().toInt()
+                    val homeScore = model.score!!.fullTime.home.toString().toDouble().toInt()
                     val awayScore = model.score.fullTime.away.toString().toDouble().toInt()
                     holder.viewBinding.scoreHome.text = homeScore.toString()
                     holder.viewBinding.scoreAway.text = awayScore.toString()

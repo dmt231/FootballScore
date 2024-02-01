@@ -13,7 +13,10 @@ interface ApiInterface {
     // Get Competition_Match
     @GET("competitions/{id}/matches")
     @Headers("X-Auth-Token:fba80be2ea3b4d5d8b9e9c3d4f10a2ed")
-    fun getMatchFromCompetition(@Path("id") competitionId : Int, @Query("matchday") matchDay : Int) : Call<Competition_Match>
+    fun getMatchFromCompetition(@Path("id") competitionId : Int) : Call<Competition_Match>
+    @GET("competitions/{id}/matches")
+    @Headers("X-Auth-Token:fba80be2ea3b4d5d8b9e9c3d4f10a2ed")
+    fun getMatchFromCompetitionBySeason(@Path("id") competitionId : Int, @Query("season") season :Int) : Call<Competition_Match>
     @GET("competitions/{id}/matches")
     @Headers("X-Auth-Token:fba80be2ea3b4d5d8b9e9c3d4f10a2ed")
     fun getMatchFromCompetitionByDate(@Path("id") competitionId : Int, @Query("dateFrom") dateFrom : String, @Query("dateTo")  dateTo : String ) : Call<Competition_Match>

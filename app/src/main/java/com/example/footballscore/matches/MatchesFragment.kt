@@ -202,7 +202,7 @@ class MatchesFragment: Fragment() {
             ) {
                 val listMatch = response.body()!!.matches
                 for(match in listMatch){
-                    Log.d("Info : ", match.homeTeam.name + match.score.fullTime.home + ":" + match.awayTeam.name + match.score.fullTime.away)
+                    Log.d("Info : ", match.homeTeam!!.name + match.score!!.fullTime.home + ":" + match.awayTeam!!.name + match.score.fullTime.away)
                 }
                 onCallBackFromAPI.callBack(listMatch)
             }
