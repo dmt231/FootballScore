@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
@@ -175,6 +176,7 @@ class MatchesOfLeagueFragment(competitionId: Int, competitionImage : String, com
                 call: Call<Competition_Match>,
                 response: Response<Competition_Match>
             ) {
+                val roundRecent = response.body()!!.matches[0].season!!.currentMatchday
                 val result = response.body()!!.matches
                 var roundNumber = 1;
                 val roundMatch = Match_Of_Competition()
@@ -192,7 +194,23 @@ class MatchesOfLeagueFragment(competitionId: Int, competitionImage : String, com
                         listMatch.add(match)
                     }
                 }
+                var scrollPosition = 0;
+                for(match in listMatch){
+                    if(match.round == roundRecent){
+                       scrollPosition = listMatch.indexOf(match) + 6
+                        break
+                    }
+                }
                 adapterMath.notifyDataSetChanged()
+                viewBinding.recyclerViewMatches.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                    override fun onGlobalLayout() {
+                        // Loại bỏ lắng nghe sau khi layout hoàn thành
+                        viewBinding.recyclerViewMatches.viewTreeObserver.removeOnGlobalLayoutListener(this)
+
+                        // Cuộn RecyclerView đến vị trí mong muốn
+                        viewBinding.recyclerViewMatches.scrollToPosition(scrollPosition)
+                    }
+                })
                 viewBinding.recyclerViewMatches.visibility = View.VISIBLE
             }
 

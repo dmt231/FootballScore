@@ -71,8 +71,8 @@ class AdapterMatch(listMatch : ArrayList<Match_Of_Competition>) : RecyclerView.A
                 val model = listMatch[position]
                 loadWithPlaceholder(holder.viewBinding.imageHome, model.homeTeam!!.crest)
                 loadWithPlaceholder(holder.viewBinding.imageAway, model.awayTeam!!.crest)
-                matchViewHolder.viewBinding.nameHome.text = model.homeTeam.name
-                matchViewHolder.viewBinding.nameAway.text = model.awayTeam.name
+                matchViewHolder.viewBinding.nameHome.text = model.homeTeam.shortName
+                matchViewHolder.viewBinding.nameAway.text = model.awayTeam.shortName
                 if(getDateByYearMonthDay(model.utcDate!!) == getDateRecent()){
                     when(model.status){
                         "FINISHED" -> {

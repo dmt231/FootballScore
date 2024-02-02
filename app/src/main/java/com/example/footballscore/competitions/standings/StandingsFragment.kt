@@ -57,7 +57,7 @@ class StandingsFragment(competitionId: Int, competitionImage : String, competiti
         apiInterface = ApiClient().getClient().create(ApiInterface::class.java)
         listStandings = ArrayList()
         setUpRecyclerView()
-        if(idLeague == 2000 || idLeague == 2001){
+        if(idLeague == 2000 || idLeague == 2001 || idLeague == 2018){
             getStandingDataRecent()
         }
         setUpData()
@@ -87,7 +87,6 @@ class StandingsFragment(competitionId: Int, competitionImage : String, competiti
                     }
                     "2023-2024" -> {
                         Log.d("2023-2024 Selected ",  "True")
-                        getStandingDataBySeason(2023)
                         viewBinding.recyclerViewStandings.visibility = View.GONE
                         viewBinding.progressBar.visibility = View.VISIBLE
                     }
@@ -155,7 +154,7 @@ class StandingsFragment(competitionId: Int, competitionImage : String, competiti
 
         val defaultSelectionIndex = arrayList.indexOf("2023-2024")
         viewBinding.spinnerSeason.setSelection(defaultSelectionIndex)
-        if(idLeague == 2000 || idLeague == 2001){
+        if(idLeague == 2000 || idLeague == 2001 || idLeague == 2018){
             viewBinding.spinnerSeason.visibility = View.GONE
         }
     }
