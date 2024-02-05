@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+<TextView
+    android:id="@+id/namePlayer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:fontFamily="sans-serif-condensed"
+    android:textColor="@color/black"
+    android:textSize="@dimen/_12ssp"
+    android:text="Gabriel Jesus"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_5sdp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_11ssp"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:text="26 yrs"/>
+
+        <TextView
+            android:id="@+id/nationPlayerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_11ssp"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="BRA"/>
+    </LinearLayout>
+    <View
+        android:layout_width="@dimen/_300sdp"
+        android:background="@color/grayTheme"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_height="1dp"/>
+
+</LinearLayout>

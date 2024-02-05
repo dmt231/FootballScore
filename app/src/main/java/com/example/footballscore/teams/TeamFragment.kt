@@ -12,9 +12,9 @@ import com.bumptech.glide.Glide
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGParseException
 import com.example.footballscore.R
-import com.example.footballscore.adapter.viewpagerAdapter.LeagueViewPagerAdapter
+
 import com.example.footballscore.adapter.viewpagerAdapter.clubAdapter
-import com.example.footballscore.databinding.MatchesLayoutBinding
+
 import com.example.footballscore.databinding.TeamFragmentLayoutBinding
 import com.example.footballscore.model.ApiClient
 import com.example.footballscore.model.ApiInterface

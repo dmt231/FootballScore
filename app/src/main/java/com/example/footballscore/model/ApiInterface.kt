@@ -4,6 +4,7 @@ import com.example.footballscore.competitions.list_competition.ListCompetitions
 import com.example.footballscore.competitions.standings.StandingsModels
 import com.example.footballscore.competitions.top_score.topScoreModel.TopScoreModel
 import com.example.footballscore.matches.matchModel.Match
+import com.example.footballscore.teams.playerModel.PlayerModel
 import com.example.footballscore.teams.teamsModel.Team
 import com.example.footballscore.teams.teamsModel.TeamsModel
 import retrofit2.Call;
@@ -56,4 +57,8 @@ interface ApiInterface {
     @GET("teams/{id}/matches")
     @Headers("X-Auth-Token:fba80be2ea3b4d5d8b9e9c3d4f10a2ed")
     fun getMatchForSeasonByTeamsById(@Path("id") teamId: Int, @Query("season") season : Int) : Call<Match>
+
+    @GET("persons/{id}")
+    @Headers("X-Auth-Token:fba80be2ea3b4d5d8b9e9c3d4f10a2ed")
+    fun getPlayerById(@Path("id") playerId : Int) : Call<PlayerModel>
 }
