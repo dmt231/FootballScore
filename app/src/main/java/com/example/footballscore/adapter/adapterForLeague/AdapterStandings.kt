@@ -23,15 +23,16 @@ import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
-class AdapterStandings(standings: ArrayList<Table>) :
+class AdapterStandings(standings: ArrayList<Table>, onClickListener: OnClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var standings: ArrayList<Table>
     private val headerView = 0
     private val itemView = 1
     private val nameGroup = 2
-
+    private val onClickListener : OnClickListener
     init {
         this.standings = standings
+        this.onClickListener = onClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -104,6 +105,10 @@ class AdapterStandings(standings: ArrayList<Table>) :
                 standingHolder.viewBinding.draw.text = model.draw.toString()
                 standingHolder.viewBinding.diff.text = model.goalDifference.toString()
                 standingHolder.viewBinding.points.text = model.points.toString()
+
+                standingHolder.viewBinding.constraintLayout.setOnClickListener {
+                    onClickListener.onClick(model.team!!.id)
+                }
             }
         }
     }
@@ -149,6 +154,9 @@ class AdapterStandings(standings: ArrayList<Table>) :
         val connection: HttpURLConnection = URL(url).openConnection() as HttpURLConnection
         connection.connect()
         return connection.inputStream
+    }
+    interface OnClickListener {
+        fun onClick(teamId : Int)
     }
 }
 

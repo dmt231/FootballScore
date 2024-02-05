@@ -20,6 +20,7 @@ import com.example.footballscore.adapter.adapterForLeague.AdapterStandings
 import com.example.footballscore.databinding.LayoutStandingBinding
 import com.example.footballscore.model.ApiClient
 import com.example.footballscore.model.ApiInterface
+import com.example.footballscore.teams.TeamFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -86,7 +87,7 @@ class StandingsFragment(competitionId: Int, competitionImage : String, competiti
                         viewBinding.progressBar.visibility = View.VISIBLE
                     }
                     "2023-2024" -> {
-                        Log.d("2023-2024 Selected ",  "True")
+                        getStandingDataBySeason(2023)
                         viewBinding.recyclerViewStandings.visibility = View.GONE
                         viewBinding.progressBar.visibility = View.VISIBLE
                     }
@@ -190,6 +191,7 @@ class StandingsFragment(competitionId: Int, competitionImage : String, competiti
                 }
                 viewBinding.progressBar.visibility = View.GONE
                 standingAdapter.notifyDataSetChanged()
+                viewBinding.recyclerViewStandings.visibility = View.VISIBLE
             }
 
             override fun onFailure(call: Call<StandingsModels>, t: Throwable) {
@@ -198,7 +200,6 @@ class StandingsFragment(competitionId: Int, competitionImage : String, competiti
         })
     }
     private fun getStandingDataBySeason(season : Int) {
-        Log.d("idLeague", idLeague.toString())
         val call = apiInterface.getStandingsBySeasonForLeague(idLeague, season)
         call.enqueue(object : Callback<StandingsModels> {
             @SuppressLint("NotifyDataSetChanged")
@@ -235,6 +236,7 @@ class StandingsFragment(competitionId: Int, competitionImage : String, competiti
                 }
                 viewBinding.recyclerViewStandings.visibility = View.VISIBLE
                 standingAdapter.notifyDataSetChanged()
+                viewBinding.recyclerViewStandings.visibility = View.VISIBLE
             }
 
             override fun onFailure(call: Call<StandingsModels>, t: Throwable) {
@@ -248,7 +250,22 @@ class StandingsFragment(competitionId: Int, competitionImage : String, competiti
         viewBinding.recyclerViewStandings.setHasFixedSize(false)
         val layout = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         viewBinding.recyclerViewStandings.layoutManager = layout
-        standingAdapter = AdapterStandings(listStandings)
+        standingAdapter = AdapterStandings(listStandings, object : AdapterStandings.OnClickListener{
+            override fun onClick(teamId: Int) {
+                onChangedToTeamFragment(teamId)
+            }
+
+        })
         viewBinding.recyclerViewStandings.adapter = standingAdapter
+    }
+    private fun onChangedToTeamFragment(teamId : Int){
+        val teamFragment = TeamFragment()
+        val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
+        val bundle = Bundle()
+        bundle.putInt("teamId", teamId)
+        teamFragment.arguments = bundle
+        fragmentTrans.add(R.id.mainLayout, teamFragment)
+        fragmentTrans.addToBackStack(teamFragment.tag)
+        fragmentTrans.commit()
     }
 }

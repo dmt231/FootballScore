@@ -4,6 +4,4 @@
 
     <item android:title="Matches" android:id="@+id/matchesIcon" android:icon="@drawable/repeat" />
     <item android:title="Competitions" android:id="@+id/leaguesIcon" android:icon="@drawable/trophy"/>
-    <item android:title="Teams" android:id="@+id/teamsIcon" android:icon="@drawable/football_club" />
-
 </menu>

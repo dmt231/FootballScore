@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        >
+        <TextView
+            android:id="@+id/seasonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="sans-serif-condensed-medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/black"
+            android:text="@string/season"
+            android:textSize="@dimen/_14ssp" />
+        <Spinner
+            android:id="@+id/spinnerSeason"
+            android:layout_width="wrap_content"
+            android:popupBackground="@color/white"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginStart="@dimen/_80sdp"
+            app:layout_constraintStart_toEndOf="@id/seasonName"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/_3sdp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMatch"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/_5sdp"
+        android:layout_height="wrap_content"/>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_gravity="center"/>
+</LinearLayout>

@@ -30,12 +30,6 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.mainLayout, leagues)
         fragmentTransaction.commit()
     }
-    private fun onChangedToTeams(){
-        val teams = TeamFragment()
-        val fragmentTransaction = this.supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.mainLayout, teams)
-        fragmentTransaction.commit()
-    }
     private fun onSetUpBottomBar(){
         viewBinding.bottomBar.setOnItemSelectedListener {
             when(it.itemId){
@@ -46,10 +40,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.leaguesIcon ->{
                     onChangedToLeagues()
                     viewBinding.bottomBar.menu.findItem(R.id.leaguesIcon).isChecked=true
-                }
-                R.id.teamsIcon ->{
-                    onChangedToTeams()
-                    viewBinding.bottomBar.menu.findItem(R.id.teamsIcon).isChecked=true
                 }
             }
             false

@@ -176,6 +176,7 @@ class MatchesOfLeagueFragment(competitionId: Int, competitionImage : String, com
                 call: Call<Competition_Match>,
                 response: Response<Competition_Match>
             ) {
+                listMatch.clear()
                 val roundRecent = response.body()!!.matches[0].season!!.currentMatchday
                 val result = response.body()!!.matches
                 var roundNumber = 1;

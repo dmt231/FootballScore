@@ -2,6 +2,7 @@ package com.example.footballscore.adapter.adapterForLeague
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.PictureDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,55 +77,88 @@ class AdapterMatch(listMatch : ArrayList<Match_Of_Competition>) : RecyclerView.A
                 if(getDateByYearMonthDay(model.utcDate!!) == getDateRecent()){
                     when(model.status){
                         "FINISHED" -> {
-                            matchViewHolder.viewBinding.statusMatch.text = "FT"
-                            matchViewHolder.viewBinding.timeMatch.text = getDateByHourMinutes(model.utcDate)
                             val homeScore = model.score!!.fullTime.home.toString().toDouble().toInt()
                             val awayScore = model.score!!.fullTime.away.toString().toDouble().toInt()
-                            matchViewHolder.viewBinding.scoreHome.text = homeScore.toString()
-                            matchViewHolder.viewBinding.scoreAway.text = awayScore.toString()
+                            matchViewHolder.viewBinding.apply {
+                                statusMatch.text = "FT"
+                                timeMatch.text = getDateByHourMinutes(model.utcDate)
+                                scoreHome.text = homeScore.toString()
+                                scoreAway.text = awayScore.toString()
+                                scoreHome.visibility = View.VISIBLE
+                                scoreAway.visibility = View.VISIBLE
+                            }
                         }
                         "TIMED" -> {
-                            matchViewHolder.viewBinding.timeMatch.text = getDateByHourMinutes(model.utcDate)
-                            matchViewHolder.viewBinding.statusMatch.text = "-"
+                          matchViewHolder.viewBinding.apply {
+                              timeMatch.text = getDateByHourMinutes(model.utcDate)
+                              statusMatch.text = "-"
+                              scoreHome.visibility = View.GONE
+                              scoreAway.visibility = View.GONE
+                          }
+
                         }
                         "IN_PLAY" -> {
-                            matchViewHolder.viewBinding.statusMatch.text = "In Play"
-                            matchViewHolder.viewBinding.timeMatch.text = getDateByHourMinutes(model.utcDate)
                             val homeScore = model.score!!.fullTime.home.toString().toDouble().toInt()
                             val awayScore = model.score!!.fullTime.away.toString().toDouble().toInt()
-                            matchViewHolder.viewBinding.scoreHome.text = homeScore.toString()
-                            matchViewHolder.viewBinding.scoreAway.text = awayScore.toString()
+                            matchViewHolder.viewBinding.apply {
+                                statusMatch.text = "In Play"
+                                timeMatch.text = getDateByHourMinutes(model.utcDate)
+                                scoreHome.text = homeScore.toString()
+                                scoreAway.text = awayScore.toString()
+                                scoreHome.visibility = View.VISIBLE
+                                scoreAway.visibility = View.VISIBLE
+                            }
                         }
                         "POSTPONED" -> {
-                            matchViewHolder.viewBinding.scoreHome.text = "-"
-                            matchViewHolder.viewBinding.scoreAway.text = "-"
+                            matchViewHolder.viewBinding.apply {
+                                scoreHome.visibility = View.GONE
+                                scoreAway.visibility = View.GONE
+                                scoreHome.text = "-"
+                                scoreAway.text = "-"
+                            }
+
                         }
                     }
                 }else{
                     when(model.status){
                         "FINISHED" -> {
-                            matchViewHolder.viewBinding.statusMatch.text = "FT"
-                            matchViewHolder.viewBinding.timeMatch.text = getDateByDayMonthYear(model.utcDate)
                             val homeScore = model.score!!.fullTime.home.toString().toDouble().toInt()
                             val awayScore = model.score.fullTime.away.toString().toDouble().toInt()
-                            matchViewHolder.viewBinding.scoreHome.text = homeScore.toString()
-                            matchViewHolder.viewBinding.scoreAway.text = awayScore.toString()
+                            matchViewHolder.viewBinding.apply {
+                                statusMatch.text = "FT"
+                                timeMatch.text = getDateByDayMonthYear(model.utcDate)
+                                scoreHome.visibility = View.VISIBLE
+                                scoreAway.visibility = View.VISIBLE
+                                scoreHome.text = homeScore.toString()
+                                scoreAway.text = awayScore.toString()
+                            }
                         }
                         "TIMED" -> {
                             matchViewHolder.viewBinding.timeMatch.text = getDateByDayMonthYear(model.utcDate)
                             matchViewHolder.viewBinding.statusMatch.text = getDateByHourMinutes(model.utcDate)
+                            matchViewHolder.viewBinding.scoreHome.visibility = View.GONE
+                            matchViewHolder.viewBinding.scoreAway.visibility = View.GONE
                         }
                         "POSTPONED" -> {
-                            matchViewHolder.viewBinding.scoreHome.text = "-"
-                            matchViewHolder.viewBinding.scoreAway.text = "-"
+                            matchViewHolder.viewBinding.apply {
+                                scoreHome.text = "-"
+                                scoreAway.text = "-"
+                                scoreHome.visibility = View.GONE
+                                scoreAway.visibility = View.GONE
+                            }
                         }
                         "IN_PLAY" -> {
                             matchViewHolder.viewBinding.statusMatch.text = "In Play"
                             holder.viewBinding.timeMatch.text = getDateByHourMinutes(model.utcDate)
                             val homeScore = model.score!!.fullTime.home.toString().toDouble().toInt()
                             val awayScore = model.score!!.fullTime.away.toString().toDouble().toInt()
-                            matchViewHolder.viewBinding.scoreHome.text = homeScore.toString()
-                            matchViewHolder.viewBinding.scoreAway.text = awayScore.toString()
+                            matchViewHolder.viewBinding.apply {
+                                scoreHome.visibility = View.VISIBLE
+                                scoreAway.visibility = View.VISIBLE
+                                scoreHome.text = homeScore.toString()
+                                scoreAway.text = awayScore.toString()
+                            }
+
                         }
                     }
                 }
