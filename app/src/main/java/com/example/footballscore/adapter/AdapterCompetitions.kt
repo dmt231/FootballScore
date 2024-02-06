@@ -72,7 +72,7 @@ class AdapterCompetitions(listCompetitions : ArrayList<Competition>, onClickList
         }else{
             holder.viewBinding.expandableLayout.visibility = View.GONE
             holder.viewBinding.dropDownButton.setImageResource(R.drawable.baseline_keyboard_arrow_down_24)
-            holder.viewBinding.numberOfMatch.visibility = View.INVISIBLE
+            holder.viewBinding.numberOfMatch.visibility = View.GONE
         }
         if(competition.childMatch != null) {
             if(competition.childMatch.size != 0) {

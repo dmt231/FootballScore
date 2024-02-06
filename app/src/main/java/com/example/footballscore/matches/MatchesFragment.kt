@@ -88,7 +88,6 @@ class MatchesFragment: Fragment() {
         viewBinding.RecyclerViewCategories.layoutManager = layout
         mainAdapter = AdapterCompetitions(listCompetitions, object : AdapterCompetitions.OnClickListener{
             override fun onClickListener(competitionId: Int, position : Int) {
-                Log.d("dateString", dateString.toString())
                 getCompetitionMatch(competitionId, dateString!!, object : OnCallBackFromAPI{
                     override fun callBack(listMatch: ArrayList<Match_Of_Competition>) {
                         mainAdapter.updateListMatch(listMatch, position)

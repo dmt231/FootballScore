@@ -169,7 +169,6 @@ class MatchesOfLeagueFragment(competitionId: Int, competitionImage : String, com
         }
     }
     private fun getMatchOfLeagueBySeason(season : Int) {
-        Log.d("idLeague", idLeague.toString())
         val call = apiInterface.getMatchFromCompetitionBySeason(idLeague, season)
         call.enqueue(object : Callback<Competition_Match>{
             override fun onResponse(
@@ -221,4 +220,5 @@ class MatchesOfLeagueFragment(competitionId: Int, competitionImage : String, com
 
         })
     }
+
 }
